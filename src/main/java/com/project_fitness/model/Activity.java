@@ -5,21 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Activity {
 
     @Id
@@ -42,7 +42,11 @@ public class Activity {
     private Integer caloriesBurned;
 
     private LocalDateTime startTime;
+
+    @CreationTimestamp
     private LocalDateTime createdTime;
+
+    @UpdateTimestamp
     private LocalDateTime updatedTime;
     
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
