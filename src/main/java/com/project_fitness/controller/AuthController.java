@@ -1,5 +1,7 @@
-package com.project_fitnesscon.controller;
+package com.project_fitness.controller;
 
+import com.project_fitness.dto.RegisterRequest;
+import com.project_fitness.dto.UserResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +20,8 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public String register(@RequestBody User user) {
-        userService.register(user);
-        return "User registered successfully";
+    public UserResponse register(@RequestBody RegisterRequest registerRequest) {
+
+        return userService.register(registerRequest);
     }
 }
