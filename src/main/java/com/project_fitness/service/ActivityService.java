@@ -10,6 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ActivityService {
@@ -44,5 +48,12 @@ public class ActivityService {
         activityResponse.setUpdatedAt(activityResponse.getUpdatedAt());
 
         return activityResponse;
+    }
+
+    public @Nullable List<ActivityResponse> getUserActivity(String userId) {
+        List<Activity> activityList = activityRepository.findByUserId(userId);
+        return activityList.stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
     }
 }
