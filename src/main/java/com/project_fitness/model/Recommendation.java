@@ -17,6 +17,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Recommendation {
 
     @Id
