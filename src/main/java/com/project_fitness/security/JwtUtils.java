@@ -43,18 +43,18 @@ public class JwtUtils {
         try {
             Jwts.parser().verifyWith((SecretKey) key()).build()
                     .parseSignedClaims(jwtToken);
-            return true; // FIX: success pe true
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false; // FIX: fail pe false
+        return false;
     }
 
     private Key key() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecrets));
     }
 
-    public String getUsernameFromToken(String jwt) {
+    public String getUserIdFromToken(String jwt) {
         return Jwts.parser().verifyWith((SecretKey) key())
                 .build().parseSignedClaims(jwt)
                 .getPayload().getSubject();
