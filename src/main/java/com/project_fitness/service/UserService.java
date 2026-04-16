@@ -2,6 +2,8 @@ package com.project_fitness.service;
 
 import com.project_fitness.dto.RegisterRequest;
 import com.project_fitness.dto.UserResponse;
+import com.project_fitness.model.UserRole;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project_fitness.model.User;
@@ -18,13 +20,16 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserResponse register(RegisterRequest registerRequest) {
+        UserRole role = registerRequest.getRole() != null ? registerRequest.getRole() : UserRole.USER;
         User user = User.builder()
                 .email(registerRequest.getEmail())
-                .password(registerRequest.getPassword())
+                .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .firstName(registerRequest.getFirstName())
                 .lastName(registerRequest.getLastName())
+                .role(role)
                 .build();
 //        User user = new User(
 //                null,
@@ -43,7 +48,7 @@ public class UserService {
         return mapToResponse(savedUser);
     }
 
-    private UserResponse mapToResponse(User savedUser) {
+    public UserResponse mapToResponse(User savedUser) {
         UserResponse userResponse = new UserResponse();
         userResponse.setId(savedUser.getId());
         userResponse.setEmail(savedUser.getEmail());
