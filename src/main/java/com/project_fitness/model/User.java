@@ -17,6 +17,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @AllArgsConstructor
 @ToString(exclude = {"activity", "recommendation"})
 @Builder
+@Table(name = "My_User")
 public class User {
 
     @Id
